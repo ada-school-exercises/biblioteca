@@ -4,15 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.ada.biblioteca.bo.User;
 import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserRequestLogin;
-import org.ada.biblioteca.dto.user.UserResponse;
 import org.ada.biblioteca.dto.user.UserResponseLogin;
 import org.ada.biblioteca.service.auth.AuthenticationService;
 import org.ada.biblioteca.service.auth.JwtService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
@@ -24,20 +26,17 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody UserRequest registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
-
-        return ResponseEntity.ok(registeredUser);
+        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResponseLogin> authenticate(@RequestBody UserRequestLogin loginUserDto) {
         User authenticatedUser = authenticationService.login(loginUserDto);
-
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
+        List<String> roles = authenticationService.getRolesName(authenticatedUser);
+        String jwtToken = jwtService.generateToken(authenticatedUser, roles);
         UserResponseLogin loginResponse = new UserResponseLogin();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
-
-        return ResponseEntity.ok(loginResponse);
+        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 }
