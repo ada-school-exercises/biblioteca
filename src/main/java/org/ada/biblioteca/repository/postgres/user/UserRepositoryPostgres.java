@@ -1,4 +1,4 @@
-package org.ada.biblioteca.repository.postgres;
+package org.ada.biblioteca.repository.postgres.user;
 
 import lombok.RequiredArgsConstructor;
 import org.ada.biblioteca.bo.User;

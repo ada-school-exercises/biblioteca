@@ -1,4 +1,4 @@
-package org.ada.biblioteca.repository.postgres;
+package org.ada.biblioteca.repository.postgres.user;
 
 import org.ada.biblioteca.bo.User;
 import org.springframework.data.jpa.repository.JpaRepository;

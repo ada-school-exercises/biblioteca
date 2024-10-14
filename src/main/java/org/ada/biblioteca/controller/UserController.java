@@ -19,12 +19,6 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
-        UserResponse userResponse = userService.createUser(userRequest);
-        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
-    }
-
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers() {
         List<UserResponse> userResponses = userService.getUsers();
