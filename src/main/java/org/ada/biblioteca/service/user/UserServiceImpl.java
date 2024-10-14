@@ -3,7 +3,6 @@ package org.ada.biblioteca.service.user;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.ada.biblioteca.bo.User;
-import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserRequestUpdate;
 import org.ada.biblioteca.dto.user.UserResponse;
 import org.ada.biblioteca.repository.UserRepository;
@@ -20,12 +19,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserCaster userCaster;
 
-    @Override
-    public UserResponse createUser(UserRequest userRequest) {
-        User user = userCaster.userRequestToUser(userRequest);
-        userRepository.createUser(user);
-        return userCaster.userToUserResponse(user);
-    }
 
     @Override
     public List<UserResponse> getUsers() {

@@ -38,4 +38,9 @@ public class UserRepositoryPostgres implements UserRepository {
     public void deleteUser(Long idUser) {
         userRepositoryJpa.deleteById(idUser);
     }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userRepositoryJpa.findByEmail(email);
+    }
 }

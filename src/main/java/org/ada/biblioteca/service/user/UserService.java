@@ -7,7 +7,6 @@ import org.ada.biblioteca.dto.user.UserResponse;
 import java.util.List;
 
 public interface UserService {
-    UserResponse createUser(UserRequest userRequest);
     List<UserResponse> getUsers();
     UserResponse findUserById(Long idUser);
     UserResponse updateUser(Long idUser, UserRequestUpdate userRequestUpdate);
