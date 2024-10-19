@@ -40,16 +40,16 @@ public class AuthenticationService {
         return userRepository.createUser(user);
     }
 
-    public User login(UserRequestLogin input) {
+    public User login(UserRequestLogin userRequestLogin) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
-                        input.getPassword()
+                        userRequestLogin.getUsername(),
+                        userRequestLogin.getPassword()
                 )
         );
 
-        return userRepository.findUserByEmail(input.getEmail())
-                .orElseThrow();
+        return userRepository.findUserByUsername(userRequestLogin.getUsername())
+                .orElseThrow(() -> new EntityNotFoundException("error authenticating user, could not find user"));
     }
 
     public List<String> getRolesName (User user) {

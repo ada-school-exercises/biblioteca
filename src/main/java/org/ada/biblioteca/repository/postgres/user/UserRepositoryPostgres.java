@@ -43,4 +43,9 @@ public class UserRepositoryPostgres implements UserRepository {
     public Optional<User> findUserByEmail(String email) {
         return userRepositoryJpa.findByEmail(email);
     }
+
+    @Override
+    public Optional<User> findUserByUsername(String username) {
+        return userRepositoryJpa.findByUsername(username);
+    }
 }

@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
         user.setName(userRequestUpdate.getName());
         user.setUsername(userRequestUpdate.getUsername());
         user.setEmail(userRequestUpdate.getEmail());
-        userRepository.updateUser(user);
-        return userCaster.userToUserResponse(user);
+        User update = userRepository.updateUser(user);
+        return userCaster.userToUserResponse(update);
     }
 
     @Override
