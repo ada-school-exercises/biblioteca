@@ -1,7 +1,6 @@
 package org.ada.biblioteca.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserRequestUpdate;
 import org.ada.biblioteca.dto.user.UserResponse;
 import org.ada.biblioteca.service.user.UserService;

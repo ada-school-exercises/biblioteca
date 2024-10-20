@@ -1,6 +1,5 @@
 package org.ada.biblioteca.service.user;
 
-import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserRequestUpdate;
 import org.ada.biblioteca.dto.user.UserResponse;
 
