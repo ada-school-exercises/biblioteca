@@ -1,7 +1,7 @@
 package org.ada.biblioteca.repository.postgres.user;
 
 import lombok.RequiredArgsConstructor;
-import org.ada.biblioteca.bo.User;
+import org.ada.biblioteca.bo.postgres.UserPostgres;
 import org.ada.biblioteca.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,22 +15,22 @@ public class UserRepositoryPostgres implements UserRepository {
     private final UserRepositoryJpa userRepositoryJpa;
 
     @Override
-    public User createUser(User user) {
+    public UserPostgres createUser(UserPostgres user) {
         return userRepositoryJpa.save(user);
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<UserPostgres> getUsers() {
         return userRepositoryJpa.findAll();
     }
 
     @Override
-    public Optional<User> findUserById(Long id) {
+    public Optional<UserPostgres> findUserById(Long id) {
         return userRepositoryJpa.findById(id);
     }
 
     @Override
-    public User updateUser(User user) {
+    public UserPostgres updateUser(UserPostgres user) {
         return userRepositoryJpa.save(user);
     }
 
@@ -40,12 +40,12 @@ public class UserRepositoryPostgres implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<UserPostgres> findUserByEmail(String email) {
         return userRepositoryJpa.findByEmail(email);
     }
 
     @Override
-    public Optional<User> findUserByUsername(String username) {
+    public Optional<UserPostgres> findUserByUsername(String username) {
         return userRepositoryJpa.findByUsername(username);
     }
 }

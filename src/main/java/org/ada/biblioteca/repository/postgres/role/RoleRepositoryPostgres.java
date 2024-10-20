@@ -1,7 +1,7 @@
 package org.ada.biblioteca.repository.postgres.role;
 
 import lombok.RequiredArgsConstructor;
-import org.ada.biblioteca.bo.Role;
+import org.ada.biblioteca.bo.postgres.RolePostgres;
 import org.ada.biblioteca.repository.RoleRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,22 +15,22 @@ public class RoleRepositoryPostgres implements RoleRepository {
     private final RoleRepositoryJpa roleRepositoryJpa;
 
     @Override
-    public Role create(Role role) {
+    public RolePostgres create(RolePostgres role) {
         return roleRepositoryJpa.save(role);
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<RolePostgres> getRoles() {
         return roleRepositoryJpa.findAll();
     }
 
     @Override
-    public Optional<Role> findRoleById(Long idRole) {
+    public Optional<RolePostgres> findRoleById(Long idRole) {
         return roleRepositoryJpa.findById(idRole);
     }
 
     @Override
-    public Role updateRole(Role role) {
+    public RolePostgres updateRole(RolePostgres role) {
         return roleRepositoryJpa.save(role);
     }
 

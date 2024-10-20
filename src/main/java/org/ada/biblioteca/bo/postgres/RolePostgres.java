@@ -1,4 +1,4 @@
-package org.ada.biblioteca.bo;
+package org.ada.biblioteca.bo.postgres;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "roles")
-public class Role {
+public class RolePostgres {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_role")

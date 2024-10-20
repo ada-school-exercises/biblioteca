@@ -30,19 +30,19 @@ public class BookController {
     }
 
     @GetMapping("/{idBook}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long idBook) {
+    public ResponseEntity<Book> getBookById(@PathVariable String idBook) {
         Book book = bookService.findBookById(idBook);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @PutMapping("/{idBook}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long idBook, @RequestBody Book book) {
+    public ResponseEntity<Book> updateBook(@PathVariable String idBook, @RequestBody Book book) {
         Book bookUpdated = bookService.updateBook(idBook, book);
         return new ResponseEntity<>(bookUpdated, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idBook}")
-    public ResponseEntity<Map<String, String>> deleteBook(@PathVariable Long idBook) {
+    public ResponseEntity<Map<String, String>> deleteBook(@PathVariable String idBook) {
         bookService.deleteBook(idBook);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Book deleted successfully");

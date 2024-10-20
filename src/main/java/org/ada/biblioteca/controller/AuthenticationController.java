@@ -1,7 +1,7 @@
 package org.ada.biblioteca.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.ada.biblioteca.bo.User;
+import org.ada.biblioteca.bo.postgres.UserPostgres;
 import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserRequestLogin;
 import org.ada.biblioteca.dto.user.UserResponseLogin;
@@ -24,14 +24,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody UserRequest registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
+    public ResponseEntity<UserPostgres> register(@RequestBody UserRequest registerUserDto) {
+        UserPostgres registeredUser = authenticationService.signup(registerUserDto);
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResponseLogin> authenticate(@RequestBody UserRequestLogin loginUserDto) {
-        User authenticatedUser = authenticationService.login(loginUserDto);
+        UserPostgres authenticatedUser = authenticationService.login(loginUserDto);
         List<String> roles = authenticationService.getRolesName(authenticatedUser);
         String jwtToken = jwtService.generateToken(authenticatedUser, roles);
         UserResponseLogin loginResponse = new UserResponseLogin();

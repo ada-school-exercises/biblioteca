@@ -1,13 +1,13 @@
 package org.ada.biblioteca.service.role;
 
-import org.ada.biblioteca.bo.Role;
+import org.ada.biblioteca.bo.postgres.RolePostgres;
 
 import java.util.List;
 
 public interface RoleService {
-    Role createRole(Role role);
-    List<Role> getRoles();
-    Role findRoleById(Long idRole);
-    Role updateRole(Long idRole, Role role);
+    RolePostgres createRole(RolePostgres role);
+    List<RolePostgres> getRoles();
+    RolePostgres findRoleById(Long idRole);
+    RolePostgres updateRole(Long idRole, RolePostgres role);
     void deleteRole(Long idRole);
 }

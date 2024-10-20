@@ -1,4 +1,4 @@
-package org.ada.biblioteca.bo;
+package org.ada.biblioteca.bo.postgres;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class UserPostgres implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -34,7 +34,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role")
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<RolePostgres> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

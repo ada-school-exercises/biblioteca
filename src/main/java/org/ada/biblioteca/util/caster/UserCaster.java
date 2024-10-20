@@ -1,6 +1,6 @@
 package org.ada.biblioteca.util.caster;
 
-import org.ada.biblioteca.bo.User;
+import org.ada.biblioteca.bo.postgres.UserPostgres;
 import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserResponse;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Component
 public class UserCaster {
-    public UserResponse userToUserResponse(User user) {
+    public UserResponse userToUserResponse(UserPostgres user) {
         UserResponse userResponse = new UserResponse();
         userResponse.setName(user.getName());
         userResponse.setUsername(user.getUsername());
@@ -19,8 +19,8 @@ public class UserCaster {
         return userResponse;
     }
 
-    public User userRequestToUser(UserRequest userRequest) {
-        User user = new User();
+    public UserPostgres userRequestToUser(UserRequest userRequest) {
+        UserPostgres user = new UserPostgres();
         user.setName(userRequest.getName());
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());

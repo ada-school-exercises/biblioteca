@@ -2,7 +2,7 @@ package org.ada.biblioteca.service.role;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.ada.biblioteca.bo.Role;
+import org.ada.biblioteca.bo.postgres.RolePostgres;
 import org.ada.biblioteca.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,24 +15,24 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Override
-    public Role createRole(Role role) {
+    public RolePostgres createRole(RolePostgres role) {
         return roleRepository.create(role);
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<RolePostgres> getRoles() {
         return roleRepository.getRoles();
     }
 
     @Override
-    public Role findRoleById(Long idRole) {
+    public RolePostgres findRoleById(Long idRole) {
         return roleRepository.findRoleById(idRole)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + idRole));
     }
 
     @Override
-    public Role updateRole(Long idRole, Role role) {
-        Role roleFound = roleRepository.findRoleById(idRole)
+    public RolePostgres updateRole(Long idRole, RolePostgres role) {
+        RolePostgres roleFound = roleRepository.findRoleById(idRole)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found with id " + idRole));
         roleFound.setRole(role.getRole());
         return roleRepository.updateRole(roleFound);

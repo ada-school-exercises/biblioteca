@@ -4,6 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.ada.biblioteca.bo.Book;
 import org.ada.biblioteca.repository.BookRepository;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,13 +29,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book findBookById(Long idBook) {
+    public Book findBookById(String idBook) {
         return bookRepository.findBookById(idBook)
                 .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND + idBook));
     }
 
     @Override
-    public Book updateBook(Long idBook, Book book) {
+    public Book updateBook(String idBook, Book book) {
         Book bookFound = bookRepository.findBookById(idBook)
                 .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND + idBook));
         bookFound.setTitle(book.getTitle());
@@ -43,7 +45,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(Long idBook) {
+    public void deleteBook(String idBook) {
         if(bookRepository.findBookById(idBook).isEmpty()) {
             throw new EntityNotFoundException(BOOK_NOT_FOUND + idBook);
         }
