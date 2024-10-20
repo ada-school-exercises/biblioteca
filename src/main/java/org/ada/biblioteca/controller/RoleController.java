@@ -1,7 +1,7 @@
 package org.ada.biblioteca.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.ada.biblioteca.bo.postgres.RolePostgres;
+import org.ada.biblioteca.bo.Role;
 import org.ada.biblioteca.service.role.RoleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,30 +18,30 @@ public class RoleController {
     private final RoleService roleService;
 
     @PostMapping
-    public ResponseEntity<RolePostgres> createRole(@RequestBody RolePostgres role) {
-        RolePostgres createdRole = roleService.createRole(role);
+    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+        Role createdRole = roleService.createRole(role);
         return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<RolePostgres>> getRoles() {
-        List<RolePostgres> roles = roleService.getRoles();
+    public ResponseEntity<List<Role>> getRoles() {
+        List<Role> roles = roleService.getRoles();
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
     @GetMapping("/{idRole}")
-    public ResponseEntity<RolePostgres> getRole(@PathVariable("idRole") Long idRole) {
-        RolePostgres role = roleService.findRoleById(idRole);
+    public ResponseEntity<Role> getRole(@PathVariable("idRole") String idRole) {
+        Role role = roleService.findRoleById(idRole);
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
     @PutMapping("{idRole}")
-    public ResponseEntity<RolePostgres> updateRole(@PathVariable("idRole") Long idRole, @RequestBody RolePostgres role) {
-        RolePostgres updatedRole = roleService.updateRole(idRole, role);
+    public ResponseEntity<Role> updateRole(@PathVariable("idRole") String idRole, @RequestBody Role role) {
+        Role updatedRole = roleService.updateRole(idRole, role);
         return new ResponseEntity<>(updatedRole, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idRole}")
-    public ResponseEntity<Map<String, String>> deleteRole(@PathVariable("idRole") Long idRole) {
+    public ResponseEntity<Map<String, String>> deleteRole(@PathVariable("idRole") String idRole) {
         roleService.deleteRole(idRole);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Role deleted successfully");
