@@ -1,16 +1,16 @@
 package org.ada.biblioteca.repository;
 
-import org.ada.biblioteca.bo.postgres.UserPostgres;
+import org.ada.biblioteca.bo.User;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    UserPostgres createUser(UserPostgres user);
-    List<UserPostgres> getUsers();
-    Optional<UserPostgres> findUserById(Long id);
-    UserPostgres updateUser(UserPostgres user);
-    void deleteUser(Long id);
-    Optional<UserPostgres> findUserByEmail(String email);
-    Optional<UserPostgres> findUserByUsername(String username);
+    User createUser(User user);
+    List<User> getUsers();
+    Optional<User> findUserById(String id);
+    User updateUser(User user);
+    void deleteUser(String id);
+    Optional<User> findUserByEmail(String email);
+    Optional<User> findUserByUsername(String username);
 }

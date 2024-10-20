@@ -25,19 +25,19 @@ public class UserController {
     }
 
     @GetMapping("/{idUser}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable("idUser") Long idUser) {
+    public ResponseEntity<UserResponse> getUser(@PathVariable("idUser") String idUser) {
         UserResponse userResponse = userService.findUserById(idUser);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{idUser}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable("idUser") Long idUser, @RequestBody UserRequestUpdate userRequestUpdate) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("idUser") String idUser, @RequestBody UserRequestUpdate userRequestUpdate) {
         UserResponse userResponse = userService.updateUser(idUser, userRequestUpdate);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idUser}")
-    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("idUser") Long idUser) {
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable("idUser") String idUser) {
         userService.deleteUser(idUser);
         Map<String, String> response = new HashMap<>();
         response.put("message", "User deleted successfully");

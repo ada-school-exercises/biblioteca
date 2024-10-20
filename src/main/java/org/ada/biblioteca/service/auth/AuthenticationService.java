@@ -2,6 +2,7 @@ package org.ada.biblioteca.service.auth;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.ada.biblioteca.bo.User;
 import org.ada.biblioteca.bo.postgres.RolePostgres;
 import org.ada.biblioteca.bo.postgres.UserPostgres;
 import org.ada.biblioteca.dto.user.UserRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,21 +28,21 @@ public class AuthenticationService {
     private final RoleRepository roleRepository;
 
 
-    public UserPostgres signup(UserRequest userRequest) {
-        UserPostgres user = new UserPostgres();
+    public User signup(UserRequest userRequest) {
+        User user = new User();
         user.setName(userRequest.getName());
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setDateCreation(LocalDateTime.now());
         user.setDateUpdate(LocalDateTime.now());
-        RolePostgres role = roleRepository.findRoleById(1L)
+       /* RolePostgres role = roleRepository.findRoleById(1L)
                 .orElseThrow(() -> new EntityNotFoundException("error creating user, could not assign a role"));
-        user.getRoles().add(role);
+        user.getRoles().add(role);*/
         return userRepository.createUser(user);
     }
 
-    public UserPostgres login(UserRequestLogin userRequestLogin) {
+    public User login(UserRequestLogin userRequestLogin) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userRequestLogin.getUsername(),
@@ -52,9 +54,9 @@ public class AuthenticationService {
                 .orElseThrow(() -> new EntityNotFoundException("error authenticating user, could not find user"));
     }
 
-    public List<String> getRolesName (UserPostgres user) {
-        return user.getRoles().stream()
+    public List<String> getRolesName (User user) {
+        return new ArrayList<>(); /*user.getRoles().stream()
                 .map(RolePostgres::getRole)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
     }
 }
