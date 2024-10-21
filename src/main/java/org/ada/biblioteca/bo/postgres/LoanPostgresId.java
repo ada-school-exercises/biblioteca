@@ -9,5 +9,5 @@ import java.io.Serializable;
 @Embeddable
 public class LoanPostgresId implements Serializable {
     private Long idBook;
-    private Long idAuthor;
+    private Long idUser;
 }
