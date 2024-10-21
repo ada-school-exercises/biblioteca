@@ -52,4 +52,10 @@ public class RoleRepositoryMongo implements RoleRepository {
     public void deleteRole(String idRole) {
         roleRepositoryNoSql.deleteById(idRole);
     }
+
+    @Override
+    public Optional<Role> findRoleByName(String roleName) {
+        Optional<RoleMongo> roleMongo = roleRepositoryNoSql.findByRole(roleName);
+        return roleMongo.map(roleCaster::roleMongoToRole);
+    }
 }

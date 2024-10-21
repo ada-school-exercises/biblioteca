@@ -19,7 +19,7 @@ public class User implements UserDetails {
     private String password;
     private LocalDateTime dateCreation;
     private LocalDateTime dateUpdate;
-    private Set<String> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

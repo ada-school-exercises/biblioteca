@@ -57,9 +57,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Collection<? extends GrantedAuthority> authorities = roles.stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-                System.out.println("datos?");
+                System.out.println("roles: " + roles);
                 if (jwtService.isTokenValid(jwt, userDetails)) {
-                    System.out.println("es valido?");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,

@@ -51,4 +51,10 @@ public class RoleRepositoryPostgres implements RoleRepository {
     public void deleteRole(String idRole) {
         roleRepositoryJpa.deleteById(Long.parseLong(idRole));
     }
+
+    @Override
+    public Optional<Role> findRoleByName(String roleName) {
+        Optional<RolePostgres> rolePostgres = roleRepositoryJpa.findByRole(roleName);
+        return rolePostgres.map(roleCaster::rolePostgresToRole);
+    }
 }

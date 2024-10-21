@@ -12,4 +12,5 @@ public interface RoleRepository {
     Optional<Role> findRoleById(String idRole);
     Role updateRole(Role role);
     void deleteRole(String idRole);
+    Optional<Role> findRoleByName(String roleName);
 }

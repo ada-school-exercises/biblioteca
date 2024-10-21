@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class BookCaster {
     public BookPostgres bookToBookPostgres(Book book) {
         BookPostgres bookPostgres = new BookPostgres();
-        bookPostgres.setIdBook(Long.parseLong(book.getIdBook()));
+        bookPostgres.setIdBook((book.getIdBook() != null && !book.getIdBook().isEmpty()) ? Long.parseLong(book.getIdBook()) : null);
         bookPostgres.setTitle(book.getTitle());
         bookPostgres.setAuthor(book.getAuthor());
         bookPostgres.setIsbn(book.getIsbn());

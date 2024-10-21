@@ -2,20 +2,19 @@ package org.ada.biblioteca.service.auth;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.ada.biblioteca.bo.Role;
 import org.ada.biblioteca.bo.User;
-import org.ada.biblioteca.bo.postgres.RolePostgres;
-import org.ada.biblioteca.bo.postgres.UserPostgres;
 import org.ada.biblioteca.dto.user.UserRequest;
 import org.ada.biblioteca.dto.user.UserRequestLogin;
 import org.ada.biblioteca.repository.RoleRepository;
 import org.ada.biblioteca.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +26,8 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
 
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     public User signup(UserRequest userRequest) {
         User user = new User();
@@ -36,9 +37,9 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setDateCreation(LocalDateTime.now());
         user.setDateUpdate(LocalDateTime.now());
-       /* RolePostgres role = roleRepository.findRoleById(1L)
+        Role role = roleRepository.findRoleByName("ROLE_USER")
                 .orElseThrow(() -> new EntityNotFoundException("error creating user, could not assign a role"));
-        user.getRoles().add(role);*/
+        user.getRoles().add(role);
         return userRepository.createUser(user);
     }
 
@@ -54,9 +55,10 @@ public class AuthenticationService {
                 .orElseThrow(() -> new EntityNotFoundException("error authenticating user, could not find user"));
     }
 
-    public List<String> getRolesName (User user) {
-        return new ArrayList<>(); /*user.getRoles().stream()
-                .map(RolePostgres::getRole)
-                .collect(Collectors.toList());*/
+    public List<String> getRolesName(User user) {
+        return user.getRoles().stream()
+                .map(Role::getRole)
+                .collect(Collectors.toList());
+
     }
 }

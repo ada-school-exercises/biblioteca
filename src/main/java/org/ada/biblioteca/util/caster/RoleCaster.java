@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 public class RoleCaster {
     public RolePostgres roleToRolePostgres(Role role) {
         RolePostgres rolePostgres = new RolePostgres();
-        rolePostgres.setIdRole(Long.parseLong(role.getIdRole()));
+        rolePostgres.setIdRole((role.getIdRole() != null && !role.getIdRole().isEmpty()) ? Long.parseLong(role.getIdRole()) : null);
+        rolePostgres.setRole(role.getRole());
         return rolePostgres;
     }
 
