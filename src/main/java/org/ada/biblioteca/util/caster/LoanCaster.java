@@ -1,14 +1,27 @@
 package org.ada.biblioteca.util.caster;
 
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.ada.biblioteca.bo.Book;
 import org.ada.biblioteca.bo.Loan;
+import org.ada.biblioteca.bo.User;
 import org.ada.biblioteca.bo.mongo.LoanMongo;
 import org.ada.biblioteca.bo.mongo.LoanMongoId;
 import org.ada.biblioteca.bo.postgres.LoanPostgres;
 import org.ada.biblioteca.bo.postgres.LoanPostgresId;
+import org.ada.biblioteca.dto.loan.LoanResponse;
+import org.ada.biblioteca.dto.loan.UserLoanResponse;
+import org.ada.biblioteca.repository.BookRepository;
+import org.ada.biblioteca.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
 public class LoanCaster {
+
+    private final UserRepository userRepository;
+    private final BookRepository bookRepository;
+
     public LoanPostgres loanToLoanPostgres(Loan loan) {
         LoanPostgres loanPostgres = new LoanPostgres();
         LoanPostgresId loanPostgresId = new LoanPostgresId();
@@ -47,5 +60,23 @@ public class LoanCaster {
         loan.setLoanDate(loanMongo.getLoanDate());
         loan.setReturnDate(loanMongo.getReturnDate());
         return loan;
+    }
+
+    public LoanResponse loanToLoanResponse(Loan loan){
+        LoanResponse loanResponse = new LoanResponse();
+        UserLoanResponse userResponse = new UserLoanResponse();
+        Book book = bookRepository.findBookById(loan.getIdBook())
+                .orElseThrow(() -> new EntityNotFoundException("Book not found"));
+        User user = userRepository.findUserById(loan.getIdUser())
+                        .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        userResponse.setId(user.getId());
+        userResponse.setName(user.getName());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setUsername(user.getUsername());
+        loanResponse.setUser(userResponse);
+        loanResponse.setBook(book);
+        loanResponse.setLoanDate(loan.getLoanDate());
+        loanResponse.setReturnDate(loan.getReturnDate());
+        return  loanResponse;
     }
 }

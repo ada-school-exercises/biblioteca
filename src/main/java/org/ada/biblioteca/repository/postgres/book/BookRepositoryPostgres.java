@@ -51,4 +51,9 @@ public class BookRepositoryPostgres implements BookRepository {
     public void deleteBook(String idBook) {
         bookRepositoryJpa.deleteById(Long.parseLong(idBook));
     }
+
+    @Override
+    public Boolean existsById(String idBook) {
+        return bookRepositoryJpa.existsById(Long.parseLong(idBook));
+    }
 }

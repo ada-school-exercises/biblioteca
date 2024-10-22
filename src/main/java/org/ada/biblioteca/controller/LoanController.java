@@ -2,6 +2,7 @@ package org.ada.biblioteca.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.ada.biblioteca.bo.Loan;
+import org.ada.biblioteca.dto.loan.LoanResponse;
 import org.ada.biblioteca.service.loan.LoanService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,26 +19,26 @@ public class LoanController {
     private final LoanService loanService;
 
     @PostMapping("/{idBook}")
-    public ResponseEntity<Loan> createLoan(@PathVariable String idBook, @RequestBody Loan loan) {
-        Loan newLoan = loanService.createLoan(idBook, loan);
+    public ResponseEntity<LoanResponse> createLoan(@PathVariable String idBook, @RequestBody Loan loan) {
+        LoanResponse newLoan = loanService.createLoan(idBook, loan);
         return new ResponseEntity<>(newLoan, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Loan>> getAllLoans() {
-        List<Loan> loanPostgres = loanService.getLoans();
+    public ResponseEntity<List<LoanResponse>> getAllLoans() {
+        List<LoanResponse> loanPostgres = loanService.getLoans();
         return new ResponseEntity<>(loanPostgres, HttpStatus.OK);
     }
 
     @GetMapping("/{idBook}")
-    public ResponseEntity<Loan> getLoanById(@PathVariable String idBook) {
-        Loan loan = loanService.findLoanById(idBook);
+    public ResponseEntity<LoanResponse> getLoanById(@PathVariable String idBook) {
+        LoanResponse loan = loanService.findLoanById(idBook);
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
     @PutMapping("/{idBook}")
-    public ResponseEntity<Loan> updateLoan(@PathVariable String idBook, @RequestBody Loan loan) {
-        Loan newLoan = loanService.updateLoan(idBook, loan);
+    public ResponseEntity<LoanResponse> updateLoan(@PathVariable String idBook, @RequestBody Loan loan) {
+        LoanResponse newLoan = loanService.updateLoan(idBook, loan);
         return new ResponseEntity<>(newLoan, HttpStatus.OK);
     }
 

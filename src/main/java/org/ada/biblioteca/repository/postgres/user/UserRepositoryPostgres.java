@@ -63,4 +63,9 @@ public class UserRepositoryPostgres implements UserRepository {
         Optional<UserPostgres> userPostgres = userRepositoryJpa.findByUsername(username);
         return userPostgres.map(userCaster::userPostgresToUser);
     }
+
+    @Override
+    public Boolean existsById(String id) {
+        return userRepositoryJpa.existsById(Long.parseLong(id));
+    }
 }

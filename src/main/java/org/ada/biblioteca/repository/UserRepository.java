@@ -13,4 +13,5 @@ public interface UserRepository {
     void deleteUser(String id);
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByUsername(String username);
+    Boolean existsById(String id);
 }

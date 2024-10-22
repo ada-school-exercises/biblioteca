@@ -65,4 +65,9 @@ public class UserRepositoryMongo implements UserRepository {
         Optional<UserMongo> userMongo = userRepositoryNoSql.findByUsername(username);
         return userMongo.map(userCaster::userMongoToUser);
     }
+
+    @Override
+    public Boolean existsById(String id) {
+        return userRepositoryNoSql.existsById(id);
+    }
 }

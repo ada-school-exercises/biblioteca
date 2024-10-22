@@ -12,4 +12,5 @@ public interface BookRepository {
     Optional<Book> findBookById(String idBook);
     Book updateBook(Book book);
     void deleteBook(String idBook);
+    Boolean existsById(String idBook);
 }

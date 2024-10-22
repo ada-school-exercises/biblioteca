@@ -90,6 +90,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(DataUnrelated.class)
+    public ResponseEntity<ProblemDetail> handleDataUnrelated(DataUnrelated ex){
+        problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("description", "Invalid data");
+        return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ProblemDetail> handleException(Exception ex) {
         problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");

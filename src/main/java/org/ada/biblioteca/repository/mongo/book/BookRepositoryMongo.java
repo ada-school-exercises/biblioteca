@@ -50,4 +50,9 @@ public class BookRepositoryMongo implements BookRepository {
     public void deleteBook(String idBook) {
         bookRepositoryMongoNoSql.deleteById(idBook);
     }
+
+    @Override
+    public Boolean existsById(String idBook) {
+        return bookRepositoryMongoNoSql.existsById(idBook);
+    }
 }
