@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +18,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     private static final String BOOK_NOT_FOUND = "Book not found with ID: ";
+    private static final String INVALID_BOOK_ID = "Invalid idBook format for Postgres: ";
 
     @Value("${spring.profiles.active}")
     private String profile;
@@ -34,11 +36,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book findBookById(String idBook) {
         if(profile.equals("postgres")) {
-            try {
-                Long id = Long.parseLong(idBook);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid idBook format for Postgres: " + idBook);
-            }
+            validateIsNumeric(idBook, INVALID_BOOK_ID + idBook);
         }
         return bookRepository.findBookById(idBook)
                 .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND + idBook));
@@ -47,11 +45,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book updateBook(String idBook, Book book) {
         if(profile.equals("postgres")) {
-            try {
-                Long id = Long.parseLong(idBook);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid idBook format for Postgres: " + idBook);
-            }
+            validateIsNumeric(idBook, INVALID_BOOK_ID + idBook);
         }
         Book bookFound = bookRepository.findBookById(idBook)
                 .orElseThrow(() -> new EntityNotFoundException(BOOK_NOT_FOUND + idBook));
@@ -64,15 +58,23 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(String idBook) {
         if(profile.equals("postgres")) {
-            try {
-                Long id = Long.parseLong(idBook);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid idBook format for Postgres: " + idBook);
-            }
+            validateIsNumeric(idBook, INVALID_BOOK_ID + idBook);
         }
         if(bookRepository.findBookById(idBook).isEmpty()) {
             throw new EntityNotFoundException(BOOK_NOT_FOUND + idBook);
         }
         bookRepository.deleteBook(idBook);
+    }
+
+    private void validateIsNumeric(String value, String errorMessage) {
+        if (!isNumeric(value)) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
+    private boolean isNumeric(String value) {
+        return Optional.ofNullable(value)
+                .filter(v -> v.matches("\\d+"))
+                .isPresent();
     }
 }

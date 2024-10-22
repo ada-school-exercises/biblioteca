@@ -1,6 +1,7 @@
 package org.ada.biblioteca.exception;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -61,6 +62,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(problemDetail, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<ProblemDetail> handlerMalformedJwtException(MalformedJwtException ex) {
+        problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
+        problemDetail.setProperty("description", "The request token is invalid");
+        return new ResponseEntity<>(problemDetail, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ProblemDetail> handleIllegalArgumentException(IllegalArgumentException ex) {
         problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -71,7 +79,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ProblemDetail> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        problemDetail.setProperty("description data", "Invalid data generates a conflict");
+        problemDetail.setProperty("description", "Invalid data generates a conflict");
+        return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DateInvalid.class)
+    public ResponseEntity<ProblemDetail> handleDateInvalid(DateInvalid ex){
+        problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setProperty("description", "Invalid date");
         return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
     }
 
