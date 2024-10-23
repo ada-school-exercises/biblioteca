@@ -3,6 +3,7 @@ package org.ada.biblioteca.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,8 +35,11 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/auth/signup").permitAll()
                         .requestMatchers("/api/v1/auth/login").permitAll()
                         .requestMatchers("/api/v1/user/**").permitAll()
-                        .requestMatchers("/api/v1/role/**").permitAll()
-                        .requestMatchers("/api/v1/book/**").permitAll()
+                        .requestMatchers("/api/v1/role/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/book").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/book/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/book/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/book/**").permitAll()
                         .requestMatchers("/api/v1/loan/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
