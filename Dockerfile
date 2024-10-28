@@ -1,12 +1,18 @@
-FROM khipu/openjdk21-alpine
-VOLUME /tmp
-ARG JAR_FILE
-ADD "build/libs/biblioteca-0.0.1-SNAPSHOT.jar" app.jar
-ENV JAVA_OPTS=""
-RUN apk add --update tzdata
-ENV TZ=America/Guatemala
-RUN echo ${TZ} > /etc/timezone
-ENV LANG es_GT.UTF-8
-ENV LANGUAGE es_GT.UTF-8
-ENV LC_ALL es_GT.UTF-8
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+FROM gradle:8.10.1-jdk21 AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN gradle build --no-daemon
+
+FROM openjdk:21-jdk-slim
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/biblioteca-0.0.1-SNAPSHOT.jar .
+COPY --from=build /app/src/main/resources/application.properties .
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "biblioteca-0.0.1-SNAPSHOT.jar"]
